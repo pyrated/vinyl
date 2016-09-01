@@ -18,7 +18,7 @@ import os
 import sphinx_rtd_theme
 
 # We cannot install llvmlite on READTHEDOCS
-if os.environ.get('READTHEDOCS') != 'True':
+if os.environ.get('READTHEDOCS') == 'True':
     from unittest.mock import MagicMock
     class MockModule(MagicMock):
         @classmethod

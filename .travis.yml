@@ -11,6 +11,14 @@ deploy:
     tags: true
     branch: master
 
+addons:
+  apt:
+    packages:
+    - llvm-3.8-dev
+
+env:
+- LLVM_CONFIG=/usr/bin/llvm-config-3.8
+
 install:
 - pip install --upgrade pip wheel
 - pip install --upgrade setuptools

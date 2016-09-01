@@ -1,6 +1,6 @@
 language: python
 python:
-- '3.5'
+  - '3.5'
 
 #deploy:
 #  provider: pypi
@@ -14,15 +14,15 @@ python:
 addons:
   apt:
     packages:
-    - llvm-3.8-dev
+      - llvm-3.8-dev
 
 env:
-- LLVM_CONFIG=/usr/bin/llvm-config-3.8
+  - LLVM_CONFIG=/usr/bin/llvm-config-3.8
 
 install:
-- pip install --upgrade pip wheel
-- pip install --upgrade setuptools
-- pip install -r requirements.txt
-- pip install -r requirements-ci.txt
+  - pip install --upgrade pip wheel
+  - pip install --upgrade setuptools
+  - pip install -r requirements.txt
+  - pip install -r requirements-ci.txt
 
 script: echo "Done"

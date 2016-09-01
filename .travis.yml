@@ -17,4 +17,4 @@ install:
   - pip install -r requirements-ci.txt
 
 script:
-  - echo "Done"
+  - echo "Installed"

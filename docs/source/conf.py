@@ -16,6 +16,18 @@
 import sys
 import os
 import sphinx_rtd_theme
+
+# We cannot install llvmlite on READTHEDOCS
+if os.environ.get('READTHEDOCS') != 'True':
+    from unittest.mock import MagicMock
+    class MockModule(MagicMock):
+        @classmethod
+        def __getattr__(cls, name):
+            return MockModule()
+
+    MOCK_MODULES = ['llvmlite']
+    sys.modules.update((mod_name, MockModule()) for mod_name in MOCK_MODULES)
+
 import vinyl
 
 # If extensions (or modules to document with autodoc) are in another directory,

@@ -7,21 +7,13 @@ dist: trusty
 
 cache: pip
 
-env:
-  - LLVM_CONFIG=/usr/bin/llvm-config-3.8
-
-addons:
-  apt:
-    sources:
-      - sourceline: 'deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.8 main'
-    packages:
-      - llvm-3.8-dev
-
 install:
   - pip install --upgrade pip wheel
-  - pip install --upgrade setuptools
-  - pip install -r requirements.txt
-  - pip install -r requirements-ci.txt
+  - pip install --upgrade conda
+  - conda env create -f environment.yml
+  - source activate vinyl
+  - pip install --upgrade sphinx_rtd_theme
+  - python setup.py install
 
 script:
   - echo "Installed"

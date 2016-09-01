@@ -2,14 +2,14 @@ language: python
 python:
 - '3.5'
 
-deploy:
-  provider: pypi
-  user: pyrated
-  password:
-    secure: pjNthWKKA4jilzAiygShrqMxF/zp2nD16WvSlZgmY+8vXCqdKgV+cE9lVRe3VGtXUI+xmsGUReL2DsvxkEyg3YnFlgrisktE+X1ufaHUzI94GzDV+FkZk6Q+kuc/Mm70ayr8uxy41KMibvEbT5ERWiBpsHTh5OBI90DW8459NMpd6gRgbUsmaJ7LdPu7630Onl+EjH1KJsbmKUXexbWI0nH3x/YPXCeATRA1Du6N3+tpG+dMy4SZRbJLWLuvwO/3NRLrsaoi+e3mFLLtznEzJZCrhPocc0QszoxkHfNWeRUF8eatM1RP+3b14w4np3wIUHSVP11DBXRgqGbklCk/VwIEMhoK2nczPUzvJcnwRS5kx+3diCkAOZpAhpIC9iNud1Ejh0P3eDz8w98Ekd1RC3Q3/hqNHQ1XD12Na9WijpnGtqaPji7uXX1xVXDECbOHkO786YGzvGrHh2/lyU95bf4m23GlaHu74SFXDjDC7j/67JKvQEJ0WqK2iBrFvJ5RHx95grdWQ9pNn+wtiqAspxz0ySR7f1CvtB97S8dhLZIg+eYRvv0rIzsMzQHh9HNalq6Pw5AdwUUQ+SNRM1zJyFjibazAvAbLpvti9qp80xiopAVHX817o28TnWxwj12j1N14JOnZ4u7zdSxJeEQHtTODikMdINszpuyBbCB8MEc=
-  on:
-    tags: true
-    branch: master
+#deploy:
+#  provider: pypi
+#  user: pyrated
+#  password:
+#    secure: pjNthWKKA4jilzAiygShrqMxF/zp2nD16WvSlZgmY+8vXCqdKgV+cE9lVRe3VGtXUI+xmsGUReL2DsvxkEyg3YnFlgrisktE+X1ufaHUzI94GzDV+FkZk6Q+kuc/Mm70ayr8uxy41KMibvEbT5ERWiBpsHTh5OBI90DW8459NMpd6gRgbUsmaJ7LdPu7630Onl+EjH1KJsbmKUXexbWI0nH3x/YPXCeATRA1Du6N3+tpG+dMy4SZRbJLWLuvwO/3NRLrsaoi+e3mFLLtznEzJZCrhPocc0QszoxkHfNWeRUF8eatM1RP+3b14w4np3wIUHSVP11DBXRgqGbklCk/VwIEMhoK2nczPUzvJcnwRS5kx+3diCkAOZpAhpIC9iNud1Ejh0P3eDz8w98Ekd1RC3Q3/hqNHQ1XD12Na9WijpnGtqaPji7uXX1xVXDECbOHkO786YGzvGrHh2/lyU95bf4m23GlaHu74SFXDjDC7j/67JKvQEJ0WqK2iBrFvJ5RHx95grdWQ9pNn+wtiqAspxz0ySR7f1CvtB97S8dhLZIg+eYRvv0rIzsMzQHh9HNalq6Pw5AdwUUQ+SNRM1zJyFjibazAvAbLpvti9qp80xiopAVHX817o28TnWxwj12j1N14JOnZ4u7zdSxJeEQHtTODikMdINszpuyBbCB8MEc=
+#  on:
+#    tags: true
+#    branch: master
 
 addons:
   apt:

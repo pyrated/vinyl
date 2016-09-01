@@ -32,9 +32,9 @@ def _loader(self, cls: type):
         return self.unpatched_loadTestsFromTestCase(cls)
 
 
-@patches(unittest.TestSuite,
+@patches(unittest.BaseTestSuite,
          target='__init__',
          rename_as='unpatched_init')
 def _initializer(self, tests=()):
-    # Forces unittest.TestSuite to filter out missing test classes in its initializer.
+    # Forces unittest.BaseTestSuite to filter out missing test classes in its initializer.
     self.unpatched_init(list(filter(lambda x: x is not None, tests)))

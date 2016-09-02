@@ -3,9 +3,7 @@ from abc import ABC
 from enum import Enum, IntEnum, unique
 from numbers import Integral, Real
 from typing import Optional
-
-from ..cs import Location
-
+from ._cs import Location
 
 __all__ = [
     'SymbolTokenKind',

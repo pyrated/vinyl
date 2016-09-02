@@ -2,8 +2,6 @@ import unittest
 from abc import ABC, abstractmethod
 from typing import List
 import vinyl.lex as lex
-from vinyl.cs import StringStream
-
 
 from ..patch_unittest import *
 
@@ -26,12 +24,12 @@ class TestLexerBase(ABC, unittest.TestCase):
 
     def test_good_inputs(self) -> None:
         for good in self.good_inputs():
-            istream = StringStream(good)
+            istream = lex.StringStream(good)
             self.assertIsInstance(next(lex.Lexer(istream)), self.token_class())
 
     def test_bad_inputs(self) -> None:
         for bad in self.bad_inputs():
-            istream = StringStream(bad)
+            istream = lex.StringStream(bad)
             try:
                 self.assertNotEqual(type(next(lex.Lexer(istream))), self.token_class())
             except StopIteration:

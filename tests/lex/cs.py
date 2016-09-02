@@ -2,8 +2,7 @@ import unittest
 from abc import ABC, abstractmethod
 from vinyl.lex import Location, StreamBase, StringStream
 
-
-from tests.patch_unittest import *
+from ..patch_unittest import *
 
 
 class TestLocation(unittest.TestCase):

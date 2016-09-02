@@ -1,6 +1,6 @@
 from typing import Iterator
 from ._token import *
-from ._cs import *
+from ._stream import *
 
 
 class BaseLexer(Iterator[BaseToken]):

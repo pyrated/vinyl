@@ -3,7 +3,7 @@ import os
 from abc import ABC, abstractmethod
 from copy import copy
 from numbers import Integral
-from typing import Callable, Optional, Generic, TypeVar
+from typing import Callable, Optional, Generic, TypeVar, Dict
 
 
 __all__ = [
@@ -51,10 +51,17 @@ class StreamBase(ABC):
     def ended(self) -> bool:
         return True
 
+    @property
+    def line_map(self) -> Dict[Integral, str]:
+        return self._line_map
+
     def read(self, n: Integral=1) -> str:
         s = self._read_raw(n)
         for c in s:
+            self._line_buffer += c
+            self._line_map[self._location._line] = self._line_buffer
             if c == '\n':
+                self._line_buffer = ''
                 self._location._line += 1
                 self._location._column = 1
             else:
@@ -97,6 +104,8 @@ class StreamBase(ABC):
     def __init__(self):
         super().__init__()
         self._location = Location()
+        self._line_buffer = ''
+        self._line_map = dict()
 
 
 IOType = TypeVar('IOType', io.RawIOBase, io.BufferedIOBase, io.TextIOBase)

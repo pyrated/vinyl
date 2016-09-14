@@ -1,9 +1,8 @@
-import unittest
 from abc import ABC, abstractmethod
 from typing import List
 import vinyl.lex as lex
 
-from ..patch_unittest import *
+from ..patch import unittest
 
 
 class TestLexerBase(ABC, unittest.TestCase):
@@ -22,12 +21,12 @@ class TestLexerBase(ABC, unittest.TestCase):
     def token_class() -> type(lex.BaseToken):
         return lex.BaseToken
 
-    def test_good_inputs(self) -> None:
+    def test_good_inputs(self):
         for good in self.good_inputs():
             istream = lex.StringStream(good)
             self.assertIsInstance(next(lex.Lexer(istream)), self.token_class())
 
-    def test_bad_inputs(self) -> None:
+    def test_bad_inputs(self):
         for bad in self.bad_inputs():
             istream = lex.StringStream(bad)
             try:
@@ -35,7 +34,7 @@ class TestLexerBase(ABC, unittest.TestCase):
             except StopIteration:
                 self.assertTrue(istream.ended)
             except Exception as e:
-                self.assertIsInstance(e, lex.TokenError)
+                self.assertIsInstance(e, lex.SyntacticalError)
 
 
 class TestIdentifierLexer(TestLexerBase):
@@ -51,8 +50,8 @@ class TestIdentifierLexer(TestLexerBase):
 
     @staticmethod
     def bad_inputs() -> List[str]:
-        return [enum.value for enum in lex.KeywordTokenKind] + \
-               [enum.value for enum in lex.SymbolTokenKind] + [
+        return TestKeywordLexer.good_inputs() + \
+               TestSymbolLexer.good_inputs() + [
             '1number',
             '.E13',
             '1e3',
@@ -72,7 +71,7 @@ class TestKeywordLexer(TestLexerBase):
 
     @staticmethod
     def bad_inputs() -> List[str]:
-        return [enum.value for enum in lex.SymbolTokenKind]
+        return TestSymbolLexer.good_inputs()
 
     @staticmethod
     def token_class() -> type(lex.KeywordToken):
@@ -86,8 +85,41 @@ class TestSymbolLexer(TestLexerBase):
 
     @staticmethod
     def bad_inputs() -> List[str]:
-        return [enum.value for enum in lex.KeywordTokenKind]
+        return TestKeywordLexer.good_inputs()
 
     @staticmethod
     def token_class() -> type(lex.SymbolToken):
         return lex.SymbolToken
+
+
+class TestIntegerLexer(TestLexerBase):
+    @staticmethod
+    def good_inputs() -> List[str]:
+        return [
+            '1',
+            '1_000',
+            '0xBEEFi',
+            '0b1000_0001_1001u32'
+        ]
+
+    @staticmethod
+    def bad_inputs() -> List[str]:
+        return TestFloatLexer.good_inputs()
+
+    @staticmethod
+    def token_class() -> type(lex.IntegerToken):
+        return lex.IntegerToken
+
+
+class TestFloatLexer(TestLexerBase):
+    @staticmethod
+    def good_inputs() -> List[str]:
+        return []
+
+    @staticmethod
+    def bad_inputs() -> List[str]:
+        return TestIntegerLexer.good_inputs()
+
+    @staticmethod
+    def token_class() -> type(lex.FloatToken):
+        return lex.FloatToken

@@ -4,7 +4,12 @@ from functools import wraps
 from typing import Callable, Tuple, Any
 
 
-def patches(cls: type, target: str=None, rename_as: str=None, external_decorator: Callable[[Any], Any]=None):
+__all__ = [
+    'unittest'
+]
+
+
+def patches(cls: type, target: str=None, rename_to: str=None, external_decorator: Callable[[Any], Any]=None):
     def decorator(patch_function: Callable[[Any], Any]) -> Callable:
         attr_name = target or patch_function.__name__
         original = getattr(cls, attr_name)
@@ -15,15 +20,15 @@ def patches(cls: type, target: str=None, rename_as: str=None, external_decorator
         if external_decorator is not None:
             wrapper = external_decorator(wrapper)
         setattr(cls, attr_name, wrapper)
-        if rename_as is not None:
-            setattr(cls, rename_as, original)
+        if rename_to is not None:
+            setattr(cls, rename_to, original)
         return wrapper
     return decorator
 
 
 @patches(unittest.TestLoader,
          target='loadTestsFromTestCase',
-         rename_as='unpatched_loadTestsFromTestCase')
+         rename_to='unpatched_loadTestsFromTestCase')
 def _loader(self, cls: type):
     # Forces unittest.TestLoader to return tests from abstract base classes as None.
     if isabstract(cls):
@@ -34,7 +39,7 @@ def _loader(self, cls: type):
 
 @patches(unittest.BaseTestSuite,
          target='__init__',
-         rename_as='unpatched_init')
+         rename_to='unpatched_init')
 def _initializer(self, tests: Tuple[type]=()):
     # Forces unittest.BaseTestSuite to filter out missing test classes in its initializer.
     self.unpatched_init(list(filter(lambda x: x is not None, tests)))

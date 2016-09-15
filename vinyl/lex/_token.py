@@ -26,7 +26,6 @@ __all__ = [
 
 @unique
 class SymbolTokenKind(Enum):
-    ARROW = '->'
     SCOPE = '::'
     COMMA = ','
     DOT = '.'
@@ -53,8 +52,12 @@ class KeywordTokenKind(Enum):
     TRAIT = 'trait'
     TUPLE = 'tuple'
     ALIAS = 'alias'
+    ELSE = 'else'
     DEF = 'def'
     MOD = 'mod'
+    LET = 'let'
+    MUT = 'var'
+    IF = 'if'
 
 
 @unique
@@ -326,4 +329,8 @@ class SymbolToken(BaseToken):
 
 
 class CommentToken(BaseToken):
+    @staticmethod
+    def short_name() -> str:
+        return 'comment'
+
     pass

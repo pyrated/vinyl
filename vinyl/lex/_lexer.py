@@ -36,11 +36,7 @@ class PeekLexer(Iterator[BaseToken]):
     def __init__(self, lexer: BaseLexer):
         self._lexer = lexer
         self._exception = None
-        try:
-            self._token = next(self._lexer)
-        except BaseException as e:
-            self._token = None
-            self._exception = e
+        self._read_next()
 
     def __iter__(self) -> Iterator[BaseToken]:
         return self
@@ -51,11 +47,19 @@ class PeekLexer(Iterator[BaseToken]):
         if self._token is None:
             raise StopIteration()
         tok = self._token
-        try:
-            self._token = next(self._lexer)
-        except StopIteration:
-            self._token = None
+        self._read_next()
         return tok
+
+    def _read_next(self):
+        while True:
+            try:
+                self._token = next(self._lexer)
+                if not isinstance(self._token, CommentToken):
+                    break
+            except BaseException as e:
+                self._token = None
+                self._exception = e
+                break
 
     @classmethod
     def from_stream(cls, istream: StreamBase):
